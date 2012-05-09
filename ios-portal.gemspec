@@ -15,9 +15,7 @@ lib/ios-portal.rb
 lib/ios-portal/client.rb
   )
   s.require_paths << 'lib'
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','ios-portal.rdoc']
-  s.rdoc_options << '--title' << 'iOS Portal' << '--main' << 'README.rdoc' << '-ri'
+  s.rdoc_options << '--title' << 'iOS Portal' << '--main' #<< 'README.rdoc' << '-ri'
   s.bindir = 'bin'
   s.executables << 'ios-portal'
   s.add_development_dependency('rake')
