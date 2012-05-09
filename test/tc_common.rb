@@ -8,6 +8,4 @@ class TC_testCommon < Test::Unit::TestCase
   def teardown
   end
 
-  def test_portal_with_multiple_accounts
-  end
 end
