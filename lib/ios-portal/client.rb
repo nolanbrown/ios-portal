@@ -27,8 +27,8 @@ module IOSPortal
           profiles[:development] = development_provisioning_profiles
         end
 
-        if options[:production] or all
-          profiles[:production] = distribution_provisioning_profiles
+        if options[:distribution] or all
+          profiles[:distribution] = distribution_provisioning_profiles
         end
         return profiles
       end

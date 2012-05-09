@@ -42,14 +42,14 @@ desc 'Displays formatted table of provisioning profiles'
 arg_name 'Apple ID and Password are required'
 command :profiles do |c|
   c.switch :development
-  c.switch :production  
+  c.switch :distribution  
   c.action do |global_options,options,args|
     username = global_options[:a]
     password = global_options[:p]
     account = global_options[:s]
     
     opt = options
-    opt[:all] = true if !opt[:development] and !opt[:production]
+    opt[:all] = true if !opt[:development] and !opt[:distribution]
 
     all_profiles = IOSPortal.client({:username=>username,:password=>password, :account=>account}).profiles(opt)
     raise "No profiles found" unless all_profiles
@@ -87,6 +87,7 @@ command :devices do |c|
     
   end
 end
+
 
 pre do |global,command,options,args|
   if command

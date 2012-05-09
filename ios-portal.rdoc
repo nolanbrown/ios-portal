@@ -1,5 +1,0 @@
-= ios-portal
-
-Generate this with
-    ios-portal rdoc
-After you have described your command line interface

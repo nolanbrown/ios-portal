@@ -1,0 +1,49 @@
+## iOS Portal
+
+iOS Portal is a CLI for viewing devices and provisioning profile details in the iOS Provisioning Portal.
+
+## Installation
+
+	$ gem install ios-portal
+
+## Usage
+### Command Line
+
+	$ ios-portal devices # List all devices in your account
+	$ ios-portal profiles # List development and distribution provisioning profiles
+	
+You'll be prompted for your Apple ID and password unless you use the flags -a and -p.
+	
+	$ ios-portal -a <APPLE_ID> -p <PASSWORD> devices
+
+Use the switch --development or --distribution for listing only a particular set of profiles
+	
+	$ ios-portal profiles --distribution
+
+
+### Ruby
+
+You must include the following require to use the client directly.
+
+	require 'ios-portal'
+	
+Initialize the client:
+
+	ios_portal_client = IOSPortal.client({:username=>"<APPLE_ID>",:password=>"<PASSWORD>"})
+	
+Optionally include an :account key if you have multiple iOS developer accounts for your Apple ID. Pass in the exact string found in the dropdown or the list that is presented when you use ios-portal from the command line.
+
+To request provisioning profiles use the call below:
+	
+	provisioning_profiles = ios_portal_client.profiles()
+	
+A hash is returned with the keys :development and :distribution containing an array
+    
+Optionally pass in a hash as a parameter with :development, :distribution, or :all set to true or false.
+	
+	ios_portal_client.profiles({:distribution=>true})
+	
+To request devices use the call below: 
+
+	devices = ios_portal_client.devices()
+	
