@@ -47,3 +47,8 @@ To request devices use the call below:
 
 	devices = ios_portal_client.devices()
 	
+	
+
+# Copyright
+Copyright (c) 2011 Nolan Brown
+See [LICENSE](https://github.com/nolanbrown/ios-portal/blob/master/LICENSE) for details.
