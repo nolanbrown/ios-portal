@@ -1,0 +1,107 @@
+#!/usr/bin/env ruby
+# 1.9 adds realpath to resolve symlinks; 1.8 doesn't
+# have this method, so we add it so we get resolved symlinks
+# and compatibility
+unless File.respond_to? :realpath
+  class File #:nodoc:
+    def self.realpath path
+      return realpath(File.readlink(path)) if symlink?(path)
+      path
+    end
+  end
+end
+$: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
+require 'rubygems'
+require 'gli'
+require 'ios-portal'
+require 'highline/import'
+require 'terminal-table'
+
+include GLI
+
+program_desc 'CLI to view iOS Provisioning Profiles and Devices in Member Center'
+
+version IOSPortal::VERSION
+
+desc 'Apple ID'
+default_value nil
+arg_name 'Your Apple ID. Generally your email address.'
+flag [:a,:appleid]
+
+desc 'Apple ID Password'
+default_value nil
+arg_name 'Your Apple ID password'
+flag [:p,:password]
+
+desc 'Account Select'
+default_value nil
+arg_name 'The full name of your Apple Account'
+flag [:s,"select-account"]
+
+desc 'Displays formatted table of provisioning profiles'
+arg_name 'Apple ID and Password are required'
+command :profiles do |c|
+  c.switch :development
+  c.switch :production  
+  c.action do |global_options,options,args|
+    username = global_options[:a]
+    password = global_options[:p]
+    account = global_options[:s]
+    
+    opt = options
+    opt[:all] = true if !opt[:development] and !opt[:production]
+
+    all_profiles = IOSPortal.client({:username=>username,:password=>password, :account=>account}).profiles(opt)
+    raise "No profiles found" unless all_profiles
+    
+    all_profiles.each do |k,profiles|
+      table = Terminal::Table.new :title => k.to_s.capitalize, :headings => ['Name', 'ID', 'App ID', 'Editable'] do |t|
+        profiles.each do |profile|
+          t << [profile[:name],profile[:id],profile[:app_id],profile[:editable]]
+        end
+      end 
+      puts table
+    end
+  end
+end
+
+desc 'Displays formatted table of devices'
+arg_name 'Apple ID and Password are required'
+command :devices do |c|
+  c.action do |global_options,options,args|
+    username = global_options[:a]
+    password = global_options[:p]
+    account = global_options[:s]
+
+    devices = IOSPortal.client({:username=>username,:password=>password, :account=>account}).devices()
+    raise "No devices found" unless devices
+    
+    
+    table = Terminal::Table.new :title => "Devices (#{devices.length})", :headings => ['Name', 'UDID', 'ID'] do |t|
+      devices.each do |device|
+        name = device[:name].gsub("’","") # remove ’, they mess with the table view
+        t << [name,device[:udid],device[:id]]
+      end
+    end 
+    puts table
+    
+  end
+end
+
+pre do |global,command,options,args|
+  if command
+    unless global[:a]
+      global[:a] = ask("Enter your Apple ID: ") 
+    end
+    unless global[:p]
+      global[:p] = ask("Enter your password: "){ |q| q.echo = "*" } 
+    end
+  end
+  true
+end
+
+on_error do |exception|
+  true
+end
+
+exit GLI.run(ARGV)

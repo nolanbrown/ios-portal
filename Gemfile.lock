@@ -1,0 +1,48 @@
+PATH
+  remote: .
+  specs:
+    iOSPortal (0.0.1)
+      gli
+      highline
+      mechanize
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    domain_name (0.5.3)
+      unf (~> 0.0.3)
+    gli (1.6.0)
+    highline (1.6.11)
+    json (1.7.1)
+    mechanize (2.4)
+      domain_name (~> 0.5, >= 0.5.1)
+      mime-types (~> 1.17, >= 1.17.2)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.4)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (~> 0.0, >= 0.0.9)
+    mime-types (1.18)
+    net-http-digest_auth (1.2)
+    net-http-persistent (2.6)
+    nokogiri (1.5.2)
+    ntlm-http (0.1.1)
+    rake (0.9.2.2)
+    rdoc (3.12)
+      json (~> 1.4)
+    terminal-table (1.4.5)
+    unf (0.0.5)
+      unf_ext
+    unf_ext (0.0.4)
+    webrobots (0.0.13)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  highline
+  iOSPortal!
+  mechanize
+  rake
+  rdoc
+  terminal-table
