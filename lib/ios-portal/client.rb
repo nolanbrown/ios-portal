@@ -53,9 +53,9 @@ module IOSPortal
                 when "checkbox"
                   device[:id] = column.children[1]['value'].strip
                 when "name"
-                  device[:name] = column.children[1].inner_html.strip
+                  device[:name] = column.children[1].text.strip
                 when "id"
-                  device[:udid] = column.inner_html.strip
+                  device[:udid] = column.text.strip
                 end
             }
             
