@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
+
 # 1.9 adds realpath to resolve symlinks; 1.8 doesn't
 # have this method, so we add it so we get resolved symlinks
 # and compatibility
@@ -17,7 +19,7 @@ require 'ios-portal'
 require 'highline/import'
 require 'terminal-table'
 
-include GLI
+include GLI::App
 
 program_desc 'CLI to view iOS Provisioning Profiles and Devices in Member Center'
 
@@ -105,4 +107,4 @@ on_error do |exception|
   true
 end
 
-exit GLI.run(ARGV)
+exit run(ARGV)

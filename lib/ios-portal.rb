@@ -1,7 +1,7 @@
 require File.expand_path('../ios-portal/client', __FILE__)
 
 module IOSPortal
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
   
   BASE_URL = "https://developer.apple.com"
   LOGIN_URL = BASE_URL + "/ios/manage/overview/index.action"
